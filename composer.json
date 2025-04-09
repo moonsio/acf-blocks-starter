@@ -1,0 +1,20 @@
+{
+    "name": "moonsio/acf-blocks-starter",
+    "description": "A starter plugin for ACF blocks using the Moonsio theme block registration system",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "MoonsioBlocks\\": "lib/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Moonsio",
+            "email": "hello@moonsio.nl"
+        }
+    ],
+    "require": {
+        "php": ">=8.3"
+    }
+} 

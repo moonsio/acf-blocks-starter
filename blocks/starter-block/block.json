@@ -1,0 +1,21 @@
+{
+    "name": "moonsio/starter-block",
+    "apiVersion": 2,
+    "title": "Starter Block",
+    "description": "A starter block example",
+    "category": "moonsio",
+    "icon": "admin-customizer",
+    "keywords": ["starter", "example"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "view.php",
+        "postTypes": ["page"]
+    },
+    "supports": {
+        "align": false,
+        "mode": false,
+        "jsx": true,
+        "anchor": true,
+        "customClassName": true
+    }
+} 

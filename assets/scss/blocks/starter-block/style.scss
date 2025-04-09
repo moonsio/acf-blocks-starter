@@ -1,0 +1,37 @@
+.starter-block {
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  &__content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  // Background colors
+  &.bg {
+    &-light {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+
+    &-dark {
+      background-color: #212529;
+      color: #f8f9fa;
+    }
+
+    &-primary {
+      background-color: #0d6efd;
+      color: #ffffff;
+    }
+  }
+
+  // Padding utilities
+  @for $i from 0 through 5 {
+    &.p-#{$i} {
+      padding: #{$i}rem;
+    }
+  }
+}

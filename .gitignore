@@ -1,0 +1,20 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Compiled assets
+/dist
+
+# Environment files
+.env
+.env.*
+
+# Editor files
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db 
