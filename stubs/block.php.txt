@@ -1,4 +1,6 @@
-<?php defined('ABSPATH') || exit('Forbidden');
+<?php 
+
+defined('ABSPATH') || exit('Forbidden');
 
 /**
  * XYZ Block

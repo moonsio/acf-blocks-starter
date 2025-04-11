@@ -86,9 +86,9 @@ const createFile = async (path, content, successMessage, errorMessage) => {
   }
 
   await createFile(
-    `${absolute}/_block.scss`,
+    `${absolute}/block.scss`,
     `// ${css}`,
-    `_block.scss created`,
+    `block.scss created`,
     "Error creating SCSS file:"
   );
   await createFile(
@@ -103,19 +103,23 @@ const createFile = async (path, content, successMessage, errorMessage) => {
     `editor.scss created`,
     "Error creating editor SCSS file:"
   );
-  await createFile(
-    `${absolute}/config.php`,
-    `<?php defined('ABSPATH') || exit('Forbidden');
-    return [
-    'fields' => []
-    ];`,
-    `config.php created`,
-    "Error creating editor SCSS file:"
-  );
 
   if (cancelled) {
     console.log("Aborting.");
     return;
+  }
+
+  let configTemplate = "stubs/config.php.txt";
+  try {
+    let configData = await fs.readFile(`${configTemplate}`, "utf8");
+    await createFile(
+      `${absolute}/config.php`,
+      configData,
+      `config.php created`,
+      "Error creating config PHP file:"
+    );
+  } catch (error) {
+    console.error("Error creating config PHP file:", error);
   }
 
   let phpTemplate = "stubs/block.php.txt";

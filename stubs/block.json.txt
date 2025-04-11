@@ -7,21 +7,25 @@
   "style": "",
   "editorStyle": "",
   "editorScript": [],
-  "category": "common",
+  "category": "moonsio",
+  "textdomain": "moonsio",
   "icon": "awards",
   "keywords": ["", "", ""],
   "acf": {
     "mode": "preview",
-    "renderTemplate": ""
+    "renderTemplate": "",
+    "postTypes": []
+  },
+    "attributes": {
+    "variable": {
+      "type": "string",
+      "default": ""
+    }
   },
   "supports": {
     "mode": false,
-    "align": ["wide", "full", "left", "center", "right"],
-    "alignWide": true,
-    "alignContent": false,
-    "alignText": false,
+    "align": false,
     "anchor": true,
-    "className": true,
     "color": {
       "background": false,
       "gradients": false,
@@ -29,8 +33,7 @@
       "text": false,
       "enableContrastChecker": false
     },
-    "customClassName": false,
-    "defaultStylePicker": true,
+    "customClassName": true,
     "html": false,
     "multiple": true,
     "reusable": true,
@@ -41,12 +44,6 @@
     "typography": {
       "fontSize": false,
       "lineHeight": false
-    }
-  },
-  "attributes": {
-    "variable": {
-      "type": "string",
-      "default": ""
     }
   },
   "example": {}
