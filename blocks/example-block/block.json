@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "moonsio/example-block",
+	"title": "Example block",
+	"description": "Nothing to tell...",
+	"style": "",
+	"editorStyle": "file:./editor.css",
+	"editorScript": [],
+	"category": "moonsio",
+	"textdomain": "moonsio",
+	"icon": "star-filled",
+	"keywords": [
+		"moonsio",
+		"example",
+		"test",
+		"acf"
+	],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "view.php",
+		"postTypes": []
+	},
+	"attributes": {
+		"variable": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"mode": false,
+		"align": false,
+		"anchor": true,
+		"color": {
+			"background": false,
+			"gradients": false,
+			"link": false,
+			"text": false,
+			"enableContrastChecker": false
+		},
+		"customClassName": true,
+		"html": false,
+		"multiple": true,
+		"reusable": true,
+		"spacing": {
+			"margin": false,
+			"padding": false
+		},
+		"typography": {
+			"fontSize": false,
+			"lineHeight": false
+		}
+	},
+	"example": {}
+}
