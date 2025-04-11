@@ -1,6 +1,6 @@
 {
     "name": "moonsio-acf-blocks-starter",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "A starter plugin for ACF blocks using the Moonsio theme block registration system",
     "scripts": {
         "dev": "webpack --mode development --watch",
