@@ -1,0 +1,58 @@
+name: Build Assets
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: "9"
+          run_install: false
+
+      - name: Install PHP dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      - name: Install Node dependencies
+        run: |
+          pnpm install
+
+      - name: Build assets
+        run: |
+          pnpm run prod
+
+      - name: Clean up Node dependencies
+        run: |
+          rm -rf node_modules
+
+      - name: Clean up Composer development dependencies
+        run: |
+          rm -rf vendor
+          composer install --no-dev --optimize-autoloader
+
+      - name: Commit built assets
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Build assets [skip ci]"
+          file_pattern: "dist/* vendor/*"

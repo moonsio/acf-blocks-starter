@@ -3,7 +3,7 @@
     "description": "A starter plugin for ACF blocks using the Moonsio theme block registration system",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "autoload": {
         "psr-4": {
             "MoonsioBlocks\\": "lib/"

@@ -2,8 +2,8 @@
 /node_modules
 /vendor
 
-# Compiled assets
-/dist
+# Compiled assets are no longer ignored
+# /dist
 
 # Environment files
 .env
