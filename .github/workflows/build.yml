@@ -25,6 +25,11 @@ jobs:
           php-version: "8.3"
           tools: composer
 
+      - name: Verify tools installation
+        run: |
+          php --version
+          composer --version
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -40,7 +45,11 @@ jobs:
         run: |
           # Check if composer.json exists
           if [ -f "composer.json" ]; then
+            echo "Composer configuration:"
+            cat composer.json
+            composer validate || echo "Warning: composer.json validation failed but continuing"
             composer install --no-dev --optimize-autoloader
+            echo "Composer installation completed!"
           else
             echo "composer.json not found, skipping PHP dependencies"
           fi
@@ -85,6 +94,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Build assets [skip ci]"
-          file_pattern: "dist/* vendor/.gitkeep"
-          # Set to false if you want to skip the commit if no changes
+          file_pattern: "dist/* vendor/* .gitignore"
+          add_options: "-f" # Force add ignored files
           skip_dirty_check: false

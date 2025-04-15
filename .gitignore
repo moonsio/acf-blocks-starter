@@ -1,6 +1,6 @@
-# Dependencies
+# Dependencies - ignored for local development but vendor is committed by workflow
 /node_modules
-/vendor
+/vendor  # This line will be commented out by the workflow to allow committing vendor files
 
 # Compiled assets are no longer ignored
 # /dist
