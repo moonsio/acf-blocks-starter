@@ -6,4 +6,4 @@ use Moonsio\Fields\FieldTypes;
 
 return [
     'fields' => []
-]; 
+];

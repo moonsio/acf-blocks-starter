@@ -4,8 +4,8 @@
   "name": "",
   "title": "",
   "description": "",
-  "style": "",
-  "editorStyle": "",
+  "style": "file:./block.scss",
+  "editorStyle": "file:./editor.scss",
   "editorScript": [],
   "category": "moonsio",
   "textdomain": "moonsio",
@@ -17,10 +17,6 @@
     "postTypes": []
   },
     "attributes": {
-    "variable": {
-      "type": "string",
-      "default": ""
-    }
   },
   "supports": {
     "mode": false,

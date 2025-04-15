@@ -92,12 +92,6 @@ const createFile = async (path, content, successMessage, errorMessage) => {
     "Error creating SCSS file:"
   );
   await createFile(
-    `${absolute}/editor.css`,
-    `/* ${css} */`,
-    `editor.css created`,
-    "Error creating editor CSS file:"
-  );
-  await createFile(
     `${absolute}/editor.scss`,
     `// ${css}`,
     `editor.scss created`,
