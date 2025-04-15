@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Need to fetch all history for git-auto-commit to work
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -32,7 +35,12 @@ jobs:
 
       - name: Install PHP dependencies
         run: |
-          composer install --no-dev --optimize-autoloader
+          # Check if composer.json exists
+          if [ -f "composer.json" ]; then
+            composer install --no-dev --optimize-autoloader
+          else
+            echo "composer.json not found, skipping PHP dependencies"
+          fi
 
       - name: Install Node dependencies
         run: |
@@ -42,11 +50,33 @@ jobs:
         run: |
           pnpm run prod
 
+      - name: Verify build output
+        run: |
+          # Ensure dist directory exists and has content
+          mkdir -p dist
+          echo "Contents of dist directory:"
+          ls -la dist || echo "No files found in dist directory"
+
       - name: Clean up Node dependencies
         run: |
           rm -rf node_modules
 
       - name: Clean up Composer development dependencies
         run: |
-          rm -rf vendor
-          composer install --no-dev --optimize-autoloader
+          # Check if composer.json exists
+          if [ -f "composer.json" ]; then
+            rm -rf vendor
+            composer install --no-dev --optimize-autoloader
+          else
+            echo "composer.json not found, skipping PHP dependencies cleanup"
+          fi
+
+      - name: Commit built assets
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Build assets [skip ci]"
+          file_pattern: "dist/* vendor/*"
+          # Set to false if you want to skip the commit if no changes
+          skip_dirty_check: false
+          # Add token for authentication
+          token: ${{ github.token }}
