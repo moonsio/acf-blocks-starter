@@ -50,9 +50,3 @@ jobs:
         run: |
           rm -rf vendor
           composer install --no-dev --optimize-autoloader
-
-      - name: Commit built assets
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Build assets [skip ci]"
-          file_pattern: "dist/* vendor/*"
