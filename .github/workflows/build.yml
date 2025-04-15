@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -67,16 +70,21 @@ jobs:
           if [ -f "composer.json" ]; then
             rm -rf vendor
             composer install --no-dev --optimize-autoloader
+            echo "Vendor directory after reinstall:"
+            ls -la vendor || echo "No vendor directory"
           else
             echo "composer.json not found, skipping PHP dependencies cleanup"
           fi
+
+      - name: Create empty vendor directory if it doesn't exist
+        run: |
+          mkdir -p vendor
+          touch vendor/.gitkeep
 
       - name: Commit built assets
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Build assets [skip ci]"
-          file_pattern: "dist/* vendor/*"
+          file_pattern: "dist/* vendor/.gitkeep"
           # Set to false if you want to skip the commit if no changes
           skip_dirty_check: false
-          # Add token for authentication
-          token: ${{ github.token }}
