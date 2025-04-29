@@ -4,7 +4,7 @@
  * Plugin Name: Moonsio ACF Blocks Starter
  * Plugin URI: https://moonsio.nl
  * Description: A starter plugin for ACF blocks using the moonsio theme block registration system
- * Version: 0.4.1
+ * Version: 0.5.0
  * Author: Moonsio
  * Author URI: https://moonsio.nl
  * License: GPL v2 or later

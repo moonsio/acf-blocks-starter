@@ -4,6 +4,10 @@ defined('ABSPATH') || exit('Forbidden');
 
 use Moonsio\Fields\FieldTypes;
 
+$block_prefix = 'XYZ_QWY';
+
 return [
-    'fields' => []
+    'fields' => [
+        // FIELD_PLACEHOLDER - DO NOT REMOVE THIS LINE
+    ],
 ]; 
