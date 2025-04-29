@@ -1,18 +1,18 @@
 <?php return array(
     'root' => array(
         'name' => 'moonsio/acf-blocks-starter',
-        'pretty_version' => '0.4.1',
-        'version' => '0.4.1.0',
+        'pretty_version' => '0.5.0',
+        'version' => '0.5.0.0',
         'reference' => null,
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'moonsio/acf-blocks-starter' => array(
-            'pretty_version' => '0.4.1',
-            'version' => '0.4.1.0',
+            'pretty_version' => '0.5.0',
+            'version' => '0.5.0.0',
             'reference' => null,
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
