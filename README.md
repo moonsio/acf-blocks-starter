@@ -1,6 +1,42 @@
-# Moonsio ACF Blocks Starter
-
+# Moonsio ACF Blocks Starter for WordPress websites
 A starter plugin for ACF blocks using the Moonsio theme block registration system.
+
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
+
+> [!CAUTION]
+> **This plugin requires:** 
+> - MoonsioForWP theme to function properly. It will not work with other themes as it relies on the Moonsio theme block registration system.
+> - Advanced Custom Fields PRO plugin
+
+> [!IMPORTANT]
+> Check [Contributing & Git Workflow](#contributing--git-workflow) before working on this plugin.
+
+
+
+## Table of Contents
+- [Development](#development)
+  - [Setup](#setup)
+  - [Build](#build)
+- [Block Development](#block-development)
+  - [Directory Structure](#directory-structure)
+  - [Creating a New Block](#creating-a-new-block)
+    - [Block Generator Options](#block-generator-options)
+  - [Block Files](#block-files)
+- [Working with Block Fields](#working-with-block-fields)
+  - [Using FieldTypes](#using-fieldtypes)
+    - [Common Field Types](#common-field-types)
+    - [Adding Custom Args](#adding-custom-args)
+  - [Working with Images](#working-with-images)
+    - [Using Image::render()](#using-imagerender)
+  - [Working with Icons](#working-with-icons)
+    - [Using the Icons Class](#using-the-icons-class)
+- [GitHub Workflow](#github-workflow)
+- [Contributing & Git Workflow](#contributing--git-workflow)
+  - [Branch Strategy](#branch-strategy)
+  - [Contribution Process](#contribution-process)
+  - [Commit Guidelines](#commit-guidelines)
+  - [CI/CD Pipeline](#cicd-pipeline)
 
 ## Development
 
@@ -277,3 +313,32 @@ The workflow runs on:
 - Pull request merges into the main branch
 
 This ensures that the repository always contains the latest compiled assets without requiring contributors to build them locally.
+
+## Contributing & Git Workflow
+
+We follow a structured workflow to maintain code quality and ensure smooth collaboration:
+
+### Branch Strategy
+- **Main branch**: Protected - no direct pushes allowed
+- **Feature branches**: Create a new branch for each feature or improvement
+- **Bugfix branches**: Use dedicated branches for bug fixes
+
+### Contribution Process
+1. **Create an issue** for new ideas or feature requests
+2. **Fork or branch** from main for your work
+3. **Develop** your changes following our coding standards
+4. **Submit a pull request** for review
+5. **Address feedback** if requested by reviewers
+
+### Commit Guidelines
+- Use [Conventional Commits](https://www.conventionalcommits.org/) format
+  - `feat:` for new features
+  - `fix:` for bug fixes
+  - `docs:` for documentation changes
+  - `style:` for formatting changes
+  - `refactor:` for code refactoring
+  - `test:` for adding tests
+  - `chore:` for maintenance tasks
+
+### CI/CD Pipeline
+Pull requests trigger our GitHub Actions workflow that builds assets automatically when merged to main.
