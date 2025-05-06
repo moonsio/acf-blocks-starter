@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
+  "apiVersion": 2,
   "name": "",
   "title": "",
   "description": "",
@@ -19,7 +19,6 @@
     "attributes": {
   },
   "supports": {
-    "mode": false,
     "align": false,
     "anchor": true,
     "color": {
@@ -31,6 +30,7 @@
     },
     "customClassName": true,
     "html": false,
+    "mode": false,
     "multiple": true,
     "reusable": true,
     "spacing": {

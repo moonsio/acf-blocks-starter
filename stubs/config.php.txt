@@ -4,7 +4,7 @@ defined('ABSPATH') || exit('Forbidden');
 
 use Moonsio\Fields\FieldTypes;
 
-$block_prefix = 'XYZ_QWY';
+$block_prefix = basename(dirname(__FILE__));
 
 return [
     'fields' => [

@@ -53,15 +53,34 @@ function moonsio_blocks_check_dependencies()
 }
 
 /**
- * Get all block directories from the plugin
+ * Get all block directories from the plugin's dist directory
  * 
  * @return array Array of block directory names
  */
 function moonsio_blocks_get_blocks()
 {
-  $blocks_dir = plugin_dir_path(__FILE__) . 'blocks/';
+  $blocks_dir = plugin_dir_path(__FILE__) . 'dist/blocks/';
 
+  // Check if dist/blocks directory exists
   if (!is_dir($blocks_dir)) {
+    // Fallback to source blocks directory if dist doesn't exist yet
+    $source_blocks_dir = plugin_dir_path(__FILE__) . 'blocks/';
+
+    if (is_dir($source_blocks_dir)) {
+      // Show admin notice to build assets
+      add_action('admin_notices', function () {
+        echo '<div class="notice notice-warning is-dismissible"><p>' .
+          esc_html__('Moonsio ACF Blocks: Please run "pnpm prod" or "pnpm dev" to build block assets.', 'moonsio-blocks') .
+          '</p></div>';
+      });
+
+      // Use source blocks as fallback
+      $all_files = scandir($source_blocks_dir);
+      return array_filter($all_files, function ($item) use ($source_blocks_dir) {
+        return is_dir($source_blocks_dir . $item) && $item !== '.' && $item !== '..';
+      });
+    }
+
     return [];
   }
 
@@ -73,7 +92,7 @@ function moonsio_blocks_get_blocks()
 }
 
 /**
- * Register all plugin blocks
+ * Register all plugin blocks from the dist directory
  */
 function moonsio_blocks_register_blocks()
 {
@@ -81,10 +100,17 @@ function moonsio_blocks_register_blocks()
     return;
   }
 
-  $plugin_path = plugin_dir_path(__FILE__);
-  $plugin_url = plugin_dir_url(__FILE__);
+  // Check if dist directory exists
+  if (is_dir(plugin_dir_path(__FILE__) . 'dist/blocks/')) {
+    $plugin_path = plugin_dir_path(__FILE__) . 'dist/';
+    $plugin_url = plugin_dir_url(__FILE__) . 'dist/';
+  } else {
+    // Fallback to source directory
+    $plugin_path = plugin_dir_path(__FILE__);
+    $plugin_url = plugin_dir_url(__FILE__);
+  }
 
-  // Find all blocks in the blocks directory
+  // Find all blocks
   $blocks = moonsio_blocks_get_blocks();
 
   if (empty($blocks)) {

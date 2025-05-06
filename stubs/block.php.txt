@@ -18,7 +18,7 @@ $classname = $block['className'] ?? '';
 
 $classes = Utils::clean_classes([
     $block_name,
-    $background ?? '',
+    $bg_color ?? '',
     $text_color ?? '',
     $classname,
 ]);
@@ -26,7 +26,7 @@ $classes = Utils::clean_classes([
 ?>
 
 <div <?php echo $anchor; ?> class="<?php echo esc_attr($classes); ?>">
-    <div class="<?php echo sprintf('%s__content container'); ?>">
+    <div class="<?php echo sprintf('%s__container container', $block_name); ?>">
         // FIELD_CONTENT
     </div>
 </div>

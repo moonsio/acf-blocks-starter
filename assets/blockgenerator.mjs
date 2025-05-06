@@ -28,6 +28,10 @@ const QUESTIONS = [
 			{ title: "Text color", value: "textColor" },
 			{ title: "Background color", value: "bgColor" },
 			{ title: "Buttons", value: "buttons" },
+			{ title: "Padding (simple)", value: "paddingSimple" },
+			{ title: "Margin (simple)", value: "marginSimple" },
+			{ title: "Padding (advanced)", value: "paddingAdvanced" },
+			{ title: "Margin (advanced)", value: "marginAdvanced" },
 		],
 		hint: "- Space to select. Return to submit",
 	},
@@ -102,16 +106,16 @@ const createFile = async (path, content, successMessage, errorMessage) => {
 	}
 
 	await createFile(
-		`${absolute}/block.css`,
-		`/* ${css} */`,
-		"block.css created",
-		"Error creating CSS file:",
+		`${absolute}/block.scss`,
+		`.wp-block-${namespace}-${slug} {\n  // Your block styles go here\n}`,
+		"block.scss created",
+		"Error creating SCSS file:",
 	);
 	await createFile(
-		`${absolute}/editor.css`,
-		`/* ${css} */`,
-		"editor.css created",
-		"Error creating editor CSS file:",
+		`${absolute}/editor.scss`,
+		`// Editor-specific styles\n.wp-block-${namespace}-${slug} {\n  // Your editor-only styles go here\n}`,
+		"editor.scss created",
+		"Error creating editor SCSS file:",
 	);
 
 	if (cancelled) {
@@ -135,9 +139,9 @@ const createFile = async (path, content, successMessage, errorMessage) => {
 			fieldConfigs.push(`FieldTypes::text($block_prefix, 'title', 'Titel')`);
 		}
 
-		if (response.fields.includes("content")) {
+		if (response.fields.includes("text")) {
 			fieldConfigs.push(
-				`FieldTypes::wysiwyg_basic($block_prefix, 'content', 'Content')`,
+				`FieldTypes::wysiwyg_basic($block_prefix, 'text', 'Tekst')`,
 			);
 		}
 
@@ -170,6 +174,25 @@ const createFile = async (path, content, successMessage, errorMessage) => {
 		if (response.fields.includes("bgColor")) {
 			fieldConfigs.push(
 				`FieldTypes::bg_color($block_prefix, 'bg_color', 'Achtergrond kleur')`,
+			);
+		}
+
+		if (response.fields.includes("paddingAdvanced")) {
+			fieldConfigs.push(
+				"FieldTypes::padding_accordion($block_prefix)",
+				`FieldTypes::padding($block_prefix, 'top')`,
+				`FieldTypes::padding($block_prefix, 'bottom')`,
+				`FieldTypes::padding($block_prefix, 'left')`,
+				`FieldTypes::padding($block_prefix, 'right')`,
+			);
+		}
+		if (response.fields.includes("marginAdvanced")) {
+			fieldConfigs.push(
+				"FieldTypes::margin_accordion($block_prefix)",
+				`FieldTypes::margin($block_prefix, 'top')`,
+				`FieldTypes::margin($block_prefix, 'bottom')`,
+				`FieldTypes::margin($block_prefix, 'left')`,
+				`FieldTypes::margin($block_prefix, 'right')`,
 			);
 		}
 
@@ -245,7 +268,7 @@ const createFile = async (path, content, successMessage, errorMessage) => {
 		if (response.fields.includes("title")) {
 			contentSections.push(`
 				<?php if ($title): ?>
-                <h2 class="<?php echo esc_attr(sprintf('%s__title', $block_name)); ?>">
+                <h2 class="<?php echo esc_attr(sprintf('%s__title text-xl text-primary-dark', $block_name)); ?>">
                     <?php echo esc_html($title); ?>
                 </h2>
             <?php endif; ?>`);
