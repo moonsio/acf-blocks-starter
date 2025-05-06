@@ -2,9 +2,6 @@
 A starter plugin for ACF blocks using the Moonsio theme block registration system.
 
 > [!CAUTION]
-> Advises about risks or negative outcomes of certain actions.
-
-> [!CAUTION]
 > **This plugin requires:** 
 > - MoonsioForWP theme to function properly. It will not work with other themes as it relies on the Moonsio theme block registration system.
 > - Advanced Custom Fields PRO plugin
@@ -169,13 +166,19 @@ return [
         FieldTypes::text($block_prefix, 'heading', 'Heading'),
         FieldTypes::text($block_prefix, 'subheading', 'Subheading')
     ]),
-    
     // Repeater field
-    FieldTypes::repeater($block_prefix, 'items', 'Items', [
-      'button_label' => 'Add Item',
-        FieldTypes::text($block_prefix, 'title', 'Title'),
-        FieldTypes::textarea($block_prefix, 'description', 'Description')
-    ])
+    FieldTypes::repeater($block_prefix, 'usps', 'Usp\'s', [
+        FieldTypes::textarea($block_prefix, 'usp', 'Usp', [
+            'rows' => 2,
+        ]),
+    ], 
+    // $args
+    'block', [
+        'button_label' => 'Add USP'
+        'wrapper' => [
+            'class' => 'moonsio-acf-repeater-usps',
+        ]
+    ]),
   ]
 ];
 ```
@@ -186,7 +189,6 @@ All FieldTypes methods accept an optional `$args` parameter to customize the fie
 
 ```php
 FieldTypes::text($block_prefix, 'title', 'Title', [
-  'placeholder' => 'Enter a title',
   'required' => true,
   'wrapper' => [
     'width' => '50'
