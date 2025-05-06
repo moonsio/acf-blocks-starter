@@ -3,7 +3,8 @@
 /vendor  # This line will be commented out by the workflow to allow committing vendor files
 
 # Compiled assets are no longer ignored
-# /dist
+/dist
+dist
 
 # Environment files
 .env
