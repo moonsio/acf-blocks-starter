@@ -1,10 +1,13 @@
 import path, { resolve as resolvePath } from "node:path";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs";
+import { glob } from "glob";
 
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,6 +17,37 @@ const proxy = {
 	name: "moonsio",
 };
 
+// Find all block directories
+const blockDirectories = fs
+	.readdirSync(resolvePath(__dirname, "blocks"))
+	.filter((file) =>
+		fs.statSync(resolvePath(__dirname, "blocks", file)).isDirectory(),
+	);
+
+// Create entries for block SCSS files
+const blockEntries = {};
+
+// Process block directories to add SCSS entries
+for (const blockName of blockDirectories) {
+	const blockDir = resolvePath(__dirname, "blocks", blockName);
+
+	// Add block.scss entry if it exists
+	if (fs.existsSync(resolvePath(blockDir, "block.scss"))) {
+		blockEntries[`blocks/${blockName}/block`] = resolvePath(
+			blockDir,
+			"block.scss",
+		);
+	}
+
+	// Add editor.scss entry if it exists
+	if (fs.existsSync(resolvePath(blockDir, "editor.scss"))) {
+		blockEntries[`blocks/${blockName}/editor`] = resolvePath(
+			blockDir,
+			"editor.scss",
+		);
+	}
+}
+
 export default (env) => {
 	// ----------------------------
 	// Configuration: Entries
@@ -21,6 +55,7 @@ export default (env) => {
 	const entry = {
 		script: resolvePath(__dirname, "assets/js/main.js"),
 		style: resolvePath(__dirname, "assets/scss/main.scss"),
+		...blockEntries,
 	};
 
 	// ----------------------------
@@ -81,6 +116,26 @@ export default (env) => {
 	const defaultPlugins = [
 		new MiniCssExtractPlugin({
 			filename: "[name].css",
+		}),
+		// Copy PHP files and block.json from blocks to dist
+		new CopyPlugin({
+			patterns: [
+				{
+					from: "blocks/*/*.php",
+					to: "[path][name][ext]",
+					context: ".",
+				},
+				{
+					from: "blocks/*/block.json",
+					to: "[path][name][ext]",
+					context: ".",
+				},
+				{
+					from: "blocks/*/config.php",
+					to: "[path][name][ext]",
+					context: ".",
+				},
+			],
 		}),
 	];
 
