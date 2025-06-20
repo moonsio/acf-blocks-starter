@@ -16,12 +16,14 @@ $classname = $block['className'] ?? '';
 // Field declarations
 // FIELD_DECLARATIONS
 
-$classes = Utils::clean_classes([
+$classes = Utils::clean_classes(
+    array(
     $block_name,
     $bg_color ?? '',
     $text_color ?? '',
     $classname,
-]);
+)
+);
 
 ?>
 

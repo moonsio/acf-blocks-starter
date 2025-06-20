@@ -4,7 +4,7 @@
  * Plugin Name: Moonsio ACF Blocks Starter
  * Plugin URI: https://moonsio.nl
  * Description: A starter plugin for ACF blocks using the moonsio theme block registration system
- * Version: 0.5.0
+ * Version: 0.6.0
  * Author: Moonsio
  * Author URI: https://moonsio.nl
  * License: GPL v2 or later
@@ -137,3 +137,29 @@ function moonsio_blocks_register_blocks()
 
 // Initialize the plugin using ACF's init hook (before the registry runs)
 add_action('acf/init', 'moonsio_blocks_register_blocks', 1);
+
+function moonsio_enqueue_scripts()
+{
+  // Main styles
+  if (file_exists(plugin_dir_path(__FILE__) . 'dist/style.css')) {
+    wp_enqueue_style(
+      'moonsio-styles',
+      plugin_dir_url(__FILE__) . 'dist/style.css',
+      array(),
+      filemtime(plugin_dir_path(__FILE__) . 'dist/style.css')
+    );
+  }
+
+  // Main script
+  if (file_exists(plugin_dir_path(__FILE__) . 'dist/script.js')) {
+    wp_enqueue_script(
+      'moonsio',
+      plugin_dir_url(__FILE__) . 'dist/script.js',
+      array(),
+      filemtime(plugin_dir_path(__FILE__) . 'dist/script.js'),
+      true
+    );
+  }
+}
+add_action('wp_enqueue_scripts', 'moonsio_enqueue_scripts', 100);
+add_action('enqueue_block_editor_assets', 'moonsio_enqueue_scripts', 100);

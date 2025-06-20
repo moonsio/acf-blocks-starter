@@ -1,12 +1,14 @@
 {
     "name": "moonsio-acf-blocks-starter",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "A starter plugin for ACF blocks using the Moonsio theme block registration system",
     "scripts": {
         "dev": "webpack --mode development --watch",
         "prod": "webpack --mode production",
         "block": "node assets/blockgenerator.mjs",
-        "version-up": "node assets/versionUpdater.mjs"
+        "version-up": "node assets/versionUpdater.mjs",
+        "plugin-zip": "cd /Users/danny/Local\\ Sites/ccoc/app/public/wp-content/plugins && zip -r mfwp-ccoc-$npm_package_version.zip mfwp-ccoc -x \"mfwp-ccoc/node_modules/*\" -x \"mfwp-ccoc/.git/*\"",
+        "plugin-build-zip": "pnpm run prod && pnpm run plugin-zip"
     },
     "author": "Moonsio",
     "license": "GPL-2.0-or-later",

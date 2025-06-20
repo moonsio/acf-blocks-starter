@@ -111,6 +111,7 @@ const createFile = async (path, content, successMessage, errorMessage) => {
 		"block.scss created",
 		"Error creating SCSS file:",
 	);
+
 	await createFile(
 		`${absolute}/editor.scss`,
 		`// Editor-specific styles\n.wp-block-${namespace}-${slug} {\n  // Your editor-only styles go here\n}`,
