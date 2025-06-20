@@ -48,7 +48,9 @@ for (const blockName of blockDirectories) {
 	}
 }
 
-export default (env) => {
+export default (env, argv) => {
+	console.log("Webpack mode:", argv.mode);
+
 	// ----------------------------
 	// Configuration: Entries
 	// ----------------------------
@@ -57,6 +59,14 @@ export default (env) => {
 		style: resolvePath(__dirname, "assets/scss/main.scss"),
 		...blockEntries,
 	};
+
+	// Add entries for view.js files
+	for (const blockName of blockDirectories) {
+		const viewJsPath = resolvePath(__dirname, "blocks", blockName, "view.js");
+		if (fs.existsSync(viewJsPath)) {
+			entry[`blocks/${blockName}/view`] = viewJsPath;
+		}
+	}
 
 	// ----------------------------
 	// Configuration: Output
@@ -107,6 +117,12 @@ export default (env) => {
 					"webpack-import-glob-loader",
 				],
 			},
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				type: "javascript/auto",
+				use: [],
+			},
 		],
 	};
 
@@ -130,10 +146,25 @@ export default (env) => {
 					to: "[path][name][ext]",
 					context: ".",
 				},
+				// {
+				//   from: "blocks/*/config.php",
+				//   to: "[path][name][ext]",
+				//   context: ".",
+				// },
 				{
-					from: "blocks/*/config.php",
+					from: "blocks/*/view.js",
 					to: "[path][name][ext]",
 					context: ".",
+				},
+				// Copy all logo files from assets/logo to dist/blocks/assets/logo
+				{
+					from: "assets/logo/*",
+					to: "blocks/assets/logo/[name][ext]",
+				},
+				// Copy all zwermen from assets/zwermen to dist/blocks/assets/zwermen
+				{
+					from: "assets/zwermen/*",
+					to: "blocks/assets/zwermen/[name][ext]",
 				},
 			],
 		}),
@@ -154,20 +185,20 @@ export default (env) => {
 	];
 
 	const plugins =
-		env.mode === "development" && proxy?.adress
+		argv.mode === "development" && proxy?.adress
 			? [...defaultPlugins, ...devPlugins]
 			: [...defaultPlugins];
 
 	// ----------------------------
 	// Configuration: Devtool
 	// ----------------------------
-	const devtool = env.mode === "development" ? "source-map" : false;
+	const devtool = argv.mode === "development" ? "source-map" : false;
 
 	// ----------------------------
 	// Configuration: Optimization
 	// ----------------------------
 	const optimization = {
-		minimize: env.mode === "production",
+		minimize: argv.mode === "production",
 		minimizer: [
 			new CssMinimizerPlugin({
 				minimizerOptions: {
@@ -175,14 +206,15 @@ export default (env) => {
 				},
 			}),
 			new TerserPlugin({
-				minify: TerserPlugin.swcMinify,
 				terserOptions: {
 					format: {
 						comments: false,
 					},
 					compress: {
 						drop_console: true,
+						passes: 2,
 					},
+					mangle: true,
 				},
 				extractComments: false,
 			}),
@@ -201,7 +233,7 @@ export default (env) => {
 	// ----------------------------
 	// Configuration: Mode
 	// ----------------------------
-	const mode = env.mode;
+	const mode = argv.mode;
 
 	const config = {
 		entry,
@@ -212,6 +244,9 @@ export default (env) => {
 		optimization,
 		watchOptions,
 		mode,
+		resolve: {
+			modules: ["node_modules", resolvePath(__dirname, "node_modules")],
+		},
 	};
 
 	return config;
